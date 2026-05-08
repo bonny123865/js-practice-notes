@@ -1,2 +1,12 @@
-/.quarto/
-**/*.quarto_ipynb
+# Quarto 產生的東西
+_site/
+.quarto/
+*.html
+
+# 各檔案的附屬資料夾
+leetcode_0428_files/
+leetcode_0429_files/
+leetcode_0430_files/
+
+# Quarto Pub 發布紀錄（因為我們要改用 GitHub Pages）
+_publish.yml
