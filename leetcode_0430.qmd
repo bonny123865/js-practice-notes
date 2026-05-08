@@ -1,0 +1,376 @@
+---
+title: "leetcode_0430"
+format:
+  html:
+    toc: true
+    toc-location: left
+    # toc-depth: 3         # 顯示到第幾層標題（## = 2, ### = 3）
+    toc-title: "目錄"    # 目錄的標題文字
+---
+
+## 2723. Add Two Promises
+### 先練習這邊
+因為感覺自己對於 async/await 不是很熟悉，還有對於 Promise 不熟悉
+完蛋，對所有都不熟悉怎麼辦啦嗚嗚
+
+暖身練習：單一 Promise 處理  
+請實作一個名為 doublePromiseValue 的非同步箭頭函式。  
+該函式會接收一個名為 numberPromise 的參數（這是一個會 resolve 出數字的 Promise）。  
+請取得該 Promise 解析後的數值，將其乘以 2，並回傳計算結果。  
+
+```javascript
+const doublePromiseValue = async (numberPromise) => {
+  // 請在此處完成實作
+};
+
+// 測試預期行為：
+// const myPromise = new Promise(resolve => setTimeout(() => resolve(10), 100));
+// doublePromiseValue(myPromise).then(result => console.log(result)); 
+// 預期輸出: 20
+```
+
+### 第一次嘗試
+```javascript
+const doublePromiseValue = async (numberPromise) => {
+  const result = await numberPromise();
+  console.log("result", result * 2);
+  return result * 2;
+};
+
+// 測試預期行為：
+const myPromise = new Promise((resolve) => setTimeout(() => resolve(10), 100));
+doublePromiseValue(myPromise).then((result) => console.log(result));
+// 預期輸出: 20
+```
+因為之前只有接觸過 `await` 需要等待的是一個函式  
+還沒有碰過如果是接收一個Promise物件的話我應該如何寫
+所以吉米尼跟我說  
+`當你建立 new Promise(...) 的那一刻，內部的非同步操作（例如計時器）就已經開始執行了。Promise 是代表「未來會產出的結果」的物件，而不是函式。要「等待」一個 Promise 物件，直接對該物件使用 await 即可。`
+
+
+### 修正後
+```{ojs}
+doublePromiseValue = async (numberPromise) => {
+  const result = await numberPromise;  // 修正這邊了
+  return result * 2;
+};
+
+// 測試預期行為：
+myPromise = new Promise((resolve) => setTimeout(() => resolve(10), 100));
+doublePromiseValue(myPromise).then((result) => (result));
+```
+
+## 2621. Sleep
+【暖身練習：手動封裝計時器】  
+因為這題的本體非常簡潔，為了確保你掌握 new Promise 與 setTimeout 結合的邏輯，我們將變數抽離，先做一個最基礎的封裝練習。  
+請實作一個名為 delayedGreeting 的函式。此函式不需要接收任何參數，但必須滿足以下條件：  
+回傳一個 Promise。  
+在整整 1000 毫秒（1秒）後，該 Promise 必須 resolve，並交出字串 "Hello"。  
+
+```javascript
+const delayedGreeting = () => {
+    // 請在此處完成實作
+};
+
+// 測試預期行為：
+// delayedGreeting().then(result => console.log(result)); 
+// 預期在 1 秒後輸出: "Hello"
+```
+### 完成測試
+看這一個題目敘述是我應該會需要輸出的是Hello，所以說嘗試寫看看唄
+```{ojs}
+delayedGreeting = () => {
+    return new Promise(resolve =>{
+        setTimeout(() =>{resolve("Hello")} , 1000)
+    })
+};
+
+// 測試預期行為：
+delayedGreeting().then(result =>(result)); 
+// 預期在 1 秒後輸出: "Hello"
+```
+這邊我的提問會是 `所以說設定時間的同時，我還會需要在裡面定義 resolve?`  
+吉米尼跟我說，他並不是讓我在裡面定義 resolve，而是請他做倒數 1000ms的動作  
+然後完成之後執行 `resolve("Hello")`，這樣 Promise才會真正結束等待
+
+
+
+## 2715.Timeout Cancellation
+
+因為原本的題目有整合「非同步計時器」與「閉包（Closure）回傳函式」  
+所以先來簡單練習一個題目看看囉
+
+核心概念：計時器 ID 與 clearTimeout  
+當你呼叫 setTimeout 時，JavaScript 執行環境會回傳一個識別碼，稱為計時器 ID (Timer ID)。  
+若要在計時器觸發前將其攔截並取消，必須呼叫內建的 clearTimeout() 函式，並將該計時器 ID 作為參數傳入。  
+
+暖身練習：封裝取消動作  
+請實作一個名為 createCancellableTimer 的函式，不需接收任何參數。請滿足以下條件：  
+在函式內部，宣告一個 setTimeout，約定在 1000 毫秒後使用 console.log 印出字串 "Timeout!"。  
+將這個 setTimeout 產生的計時器 ID 儲存到一個變數中。  
+該函式必須回傳一個新的箭頭函式。這個被回傳的函式，其唯一職責就是使用 clearTimeout 撤銷步驟 2 儲存的計時器。  
+
+```javascript
+const createCancellableTimer = () => {
+    // 1. 設定 setTimeout 並儲存 ID
+    
+    // 2. 回傳一個負責執行 clearTimeout(ID) 的函式
+};
+
+// 測試預期行為：
+// const cancel = createCancellableTimer(); 
+// cancel(); 
+// 預期結果：因為計時器被外部立即呼叫 cancel() 取消，所以 1 秒後控制台不會印出 "Timeout!"
+```
+### 小知識先補充一下
+clearTimeout 與 setTimeout 的運行機制
+
+setTimeout 會執行兩項動作：  
+1. 將非同步任務（回呼函式）註冊進執行環境內部的計時器管理表（Timer Table）。  
+2. 立即回傳一個唯一識別碼。在瀏覽器環境中，這個回傳值通常是一個正整數（例如 1, 2, 3...）；在 Node.js 中，它則是一個包含多種屬性的物件。  
+> 然後這邊可以說一下，他會接收兩個參數，第一個會是callback function，第二個會是設定的時間
+
+clearTimeout 的唯一功能是根據傳入的 ID，要求執行環境去計時器管理表中搜尋對應的紀錄：  
+1. 若任務尚未執行：環境會將該任務從管理表中移除，使其永遠不會被觸發。  
+2. 若任務已經執行或 ID 不存在：執行環境找不到對應紀錄，因此不會發生任何動作，也不會報錯。  
+
+這邊有一個簡單的範例
+```javascript
+console.log("開始註冊...");
+
+// 註冊一個 5 秒後才執行的任務
+const id = setTimeout(() => {
+    console.log("執行中");
+}, 5000);
+
+// 此時 id 已經被賦予了一個整數（例如 1）【這邊註解一下】
+console.log("註冊成功，獲取的 Timer ID 為：", id); 
+
+// 若要在 5 秒內取消該計畫，只需將該 id 變數傳入
+clearTimeout(id); 
+
+console.log("已執行 clearTimeout，計畫已取消。");
+```
+#### 嘗試解說看看
+
+剛開始先輸出 "開始註冊"
+然後在宣告變數 `id` 之前，因為 `=`這一個賦值運算子會先做右邊的內容之後才賦予左邊的值
+所以說他會直接開始執行 `setTimeout` 這一部分 
+這時候，因為我們把 `setTimeout` 賦予給 `id`，所以會需要知道一下  `setTimeout` 這一個函式到底回傳給他 什麼東西，其實他會回傳的東西就是這一個計時器的 ID
+所以說當 `id` 有值之後，他會開始繼續進行後續的程式碼
+同時，計時器在背景當中有運行
+所以輸出 "註冊成功，獲取的 Timer ID 為："
+
+然後如果我想要在五秒鐘之內取消的話 我只需要執行 "clearTimeout(id)"
+他就會不輸出 "執行中"
+然後最後會輸出"已執行 clearTimeout，計畫已取消。"
+所以在看到的輸出當中會呈現的是下面的模樣，可以看到"執行中"並沒有被輸出
+
+
+
+然後上面有說：　`// 此時 id 已經被賦予了一個整數（例如 1）【這邊註解一下】`
+因為這是以瀏覽器環境作為撰寫前提。而在你實際操作的 Node.js 環境中，雖然得到的資料型態是物件，但其邏輯完全一致  
+先取得憑證（右側執行），再將憑證存入變數（左側賦值）
+
+以下會是他的輸出
+```javascript
+開始註冊...
+註冊成功，獲取的 Timer ID 為： Timeout {
+  _idleTimeout: 5000,
+  _idlePrev: [TimersList],
+  _idleNext: [TimersList],
+  _idleStart: 56,
+  _onTimeout: [Function (anonymous)],
+  _timerArgs: undefined,
+  _repeat: null,
+  _destroyed: false,
+  Symbol(refed): true,
+  Symbol(kHasPrimitive): false,
+  Symbol(asyncId): 6,
+  Symbol(triggerId): 1,
+  Symbol(kAsyncContextFrame): undefined
+}
+已執行 clearTimeout，計畫已取消。
+```
+
+然後以下是在瀏覽器當中的輸出結果
+```javascript
+開始註冊...
+VM85:9 註冊成功，獲取的 Timer ID 為： 15
+VM85:14 已執行 clearTimeout，計畫已取消。
+undefined
+```
+
+
+### 第一次練習
+
+```javascript
+createCancellableTimer = () => {
+    // 1. 設定 setTimeout 並儲存 ID
+    const storeId = setTimeout(() =>{
+        console.log("Timeout!")
+    },1000)
+    
+    // 2. 回傳一個負責執行 clearTimeout(ID) 的函式
+    return clearTimeout(storeId) // This cause some mistakes!!!
+};
+
+```
+等等 ，但是我不知道 `setTimeout 產生的計時器 ID 儲存到一個變數` 這一件事情應該如何做到ㄟ  
+好，所以上面一個環節當中我先請吉米尼幫我解釋一次看看了，希望我可以了解啦嗚嗚  
+這邊執行之後得到的輸出會是`TypeError: cancel is not a function`，但是就是因為我上面有寫錯  
+吉米尼跟我說我錯在哪裡：  
+`return clearTimeout(storeId)`  
+當執行到這邊他會直接執行，但是因為`clearTimeout`回傳過來的東西用遠都會是 `undefined`，所以說createCancellableTimer 函式實際上回傳了 undefined。
+所以接下來這些是給我調整的一些小建議：　　  
+1. 包裝動作：不要直接執行 clearTimeout，而是宣告一個新的箭頭函式 () => { ... }，並將 clearTimeout(storeId) 寫在這個新函式的大括號內部。
+2. 回傳函式：將這個新的箭頭函式 return 出去。
+
+
+### 第二次測試
+```{ojs}
+createCancellableTimer = () => {
+    // 1. 設定 setTimeout 並儲存 ID
+    const storeId = setTimeout(() =>{
+        console.log("Timeout!")
+    },1000)
+    
+    // 2. 回傳一個負責執行 clearTimeout(ID) 的函式
+    return (() =>{
+        clearTimeout(storeId)
+        return "Timer cancelled!"  // 最後補上
+    })
+};
+
+```
+這邊原本還是有犯了一點蠢，就是我不小心把 `clearTimeout(storeId)` 當作結尾了
+但是我其實沒有做任何的 return的東西回去，所以說他會出現的結果是 `undefined`
+所以說我最後有再補上一句，這樣至少可以有回傳一個字串回去
+
+```{ojs}
+// 測試預期行為：
+cancel = createCancellableTimer(); 
+cancel(); 
+// 預期結果：因為計時器被外部立即呼叫 cancel() 取消，所以 1 秒後控制台不會印出 "Timeout!"
+```
+
+
+### 這邊是第二個練習
+
+暖身練習：延遲重置器  
+請實作一個名為 createResettableTimer 的函式。此函式接收一個字串 message 與延遲時間 delay（毫秒），並回傳一個新的箭頭函式。
+
+行為要求：每次呼叫「被回傳的新函式」時，會啟動一個計時器，在等待 delay 毫秒後，使用 console.log 印出 message。
+
+核心邏輯：如果在等待的 delay 毫秒內，這個新函式「又被呼叫了一次」，你必須使用 clearTimeout 取消上一次尚未執行的計時器，並重新啟動一個全新的計時器重新倒數。
+
+```javaScript
+const createResettableTimer = (message, delay) => {
+    // 提示：你需要在回傳函式的外部（但仍在 createResettableTimer 內部）
+    // 宣告一個變數來儲存計時器 ID，以便跨次呼叫時可以讀取並清除它
+    
+    return () => {
+        // 請在此處完成實作
+    };
+};
+
+// 測試預期行為：
+// const trigger = createResettableTimer("觸發！", 1000);
+// trigger(); 
+// setTimeout(() => trigger(), 500); 
+// 預期結果：前一次的計時器會在第 500 毫秒時被取消並重新計時。
+// 最終只會在第 1500 毫秒時印出一次 "觸發！"，而不會印出兩次。
+```
+
+這邊對於這一個題目的解讀來說，我覺得比較會有困惑的點在於 `因為會需要清除上一次計時器的ID，但是我要如何知道上一個計時器的ID??`    
+
+
+Gemini : 就是使用Closure的概念就可以做到了！然後他有給我三個提示  
+1. 在外部當中要宣告的變數要是用 `let` ，因為每一次計時器的ID在重新呼叫的時候都會需要被overwrite，所以說要用 let 來做宣告，這樣內部的 arrow function 才可以持續使用這一個外部變數  
+2. 有關於 `return` 【內部函式】當中會需要做的東西，會需要先執行 `clearTimeout(timerId)`  
+因為 closure的特性，他會先去讀取外部的共用變數 timerId，然後因為第一次呼叫的時候會是 `clearTimeout(undefined)`，所以說不會引發錯誤  
+3. 然後清除完成之後，會需要設定新的計時器(因為先把舊的清除掉了)，設定新的還有讓他印出 `message`，然後在來把新計時器的ID賦值給外面的 `timerId`，這樣下一次呼叫的時候，`timerId`儲存的就會是下一次的舊ID  
+
+#### 賦值的小誤解QQ
+這邊說一下三個的順序，但是在說明順序之前，會先需要跟自己再說一次有關賦值的東西：  
+我們已知`createResettableTimer`是一個函式，所以說當我們寫`const trigger = createResettableTimer("觸發！", 1000);`的時候  
+`createResettableTimer`會return的東西是一個箭頭函式，所以說 `trigger` 他被賦值到的東西就會是那一個arrow function  
+所以說我們後續如果寫 `trigger`的話，就是在呼叫內部的`() =>{XXX}` 的內容
+
+#### return 當中會需要設計的東西是什麼
+題目的目的是說"當新函式被再次呼叫的時候，會需要先取消上一次尚未執行的，然後再重新啟動一個計時器"
+所以說 在return 的部分，我會需要設計的東西有兩個【「清除舊 ID → 產生新任務 → 儲存新 ID 以備下次清除】  
+第一：會是需要先用clearTimeout  
+第二：會需要再多做一個計時器，所以我們可以先做setTimeout，然後因為下一次呼叫的時候timerId會需要儲存這一個計時器的ID，所以說我做完setTimeout之後再賦予值給timerId，這樣第三次呼叫trigger()的時候，我會儲存的就會是本次的timerId
+以下是一小段的舉例
+```javascript
+// 假設環境配發的計時器 ID 依序為 11, 22, 33
+const trigger = createResettableTimer("觸發！", 1000); 
+// 初始狀態：timerId 為 undefined
+
+// 【第一次呼叫】 trigger()
+// 1. 執行 clearTimeout(undefined)：靜默通過。
+// 2. 執行 setTimeout：背景開始倒數 1000ms。系統回傳 ID 為 11。
+// 3. 賦值：timerId 被更新為 11。
+
+// 【第二次呼叫】 trigger() （假設在第 300 毫秒時發生）
+// 1. 執行 clearTimeout(11)：成功攔截並取消第一次的任務。
+// 2. 執行 setTimeout：背景重新開始倒數 1000ms。系統回傳 ID 為 22。
+// 3. 賦值：timerId 被更新為 22。
+
+// 【第三次呼叫】 trigger() （假設在第 600 毫秒時發生）
+// 1. 執行 clearTimeout(22)：成功攔截並取消第二次的任務。
+// 2. 執行 setTimeout：背景重新開始倒數 1000ms。系統回傳 ID 為 33。
+// 3. 賦值：timerId 被更新為 33。
+
+// 若後續不再呼叫，最終只會在第三次呼叫的 1000 毫秒後，印出一次 "觸發！"。
+```
+`【1】 const trigger = createResettableTimer("觸發！", 1000);`  
+>> 會先執行一次 `createResettableTimer`，這時候有傳入參數跟他預計的時間  
+這時候會關注兩個部分  
+第一：timerId：這時候會是 `undefined`，因為這是第一次呼叫到這一個東西，所以剛開始會先預設是undefined
+第二：return：這邊會是需要被完成的一部分，然後因為我們把這一個呼叫`createResettableTimer`賦予給 `trigger`，所以說 `trigger`會收到的是 `createResettableTimer` 最後return 的東西
+
+`【2】 trigger(); `  
+這是它第一次被呼叫。它進到 return 的區塊內：
+執行 clearTimeout(timerId)。因為是第一次，timerId 是 undefined，所以什麼事都沒發生。
+執行 timerId = setTimeout(...)。這時候，系統在背景開始了一個 1000 毫秒的倒數（預計在第 1000 毫秒印出）。並把這組倒數的 ID 存進了 timerId。
+
+`【3】 setTimeout(() => trigger(), 500); `  
+這代表會在0.5秒之後呼叫trigger
+因為他的時限比較快到，所以說0.5秒之後，啟動了 `() => trigger()`
+所以說trigger 被第二次呼叫了！它再次進到 return 的區塊內：  
+> 執行 clearTimeout(timerId)。這時候 timerId 裡面存著第 0 秒設定的那個 ID。於是，原本預計在第 1000 毫秒要印出的計畫，在這裡被直接砍掉了。  
+> 執行 timerId = setTimeout(...)。系統在背景重新開始了一個新的 1000 毫秒倒數（預計在 500 + 1000 = 第 1500 毫秒印出）。並把新的 ID 存進 timerId。
+
+
+### 第二個練習第一次
+```{ojs}
+createResettableTimer = (message, delay) => {
+    // 所以說為了需要可以做到取消上一次尚未執行的計時器，所以會需要先儲存計時器的ID
+    // 後續才可以把它做清除
+    let timerId; 
+    
+    return () => {
+        // 這邊會需要實作的東西是：在等待 delay 毫秒後，使用 console.log 印出 message
+        clearTimeout(timerId)
+        timerId = setTimeout(() =>{
+            console.log(message)
+        },delay)
+    };
+};
+
+```
+
+```{ojs}
+trigger = createResettableTimer("觸發！", 3000);
+trigger(); 
+setTimeout(() => trigger(), 500); 
+// 預期結果：前一次的計時器會在第 500 毫秒時被取消並重新計時。
+// 最終只會在第 1500 毫秒時印出一次 "觸發！"，而不會印出兩次。
+```
+
+
+這邊的輸出當中，因為`trigger()`本身沒有return任何的值，所以回傳會呈現 `undefined`
+`setTimeout`本身會回傳一個計時器的ID，也就是現在在 timerId當中儲存的值
+`這邊的程式碼的輸出貌似看不太到，但是可以打開chrome browser console to see the result`

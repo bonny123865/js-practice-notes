@@ -1,0 +1,26 @@
+---
+title: "Template"
+format: html
+---
+
+## 2723. Add Two Numbers
+
+### 題目說明
+回傳一個函式，呼叫時永遠回傳 "Hello World"。
+
+### 解答
+
+```{ojs}
+createHelloWorld = () => {
+  return () => {
+    return "Hello World!!"
+  }
+}
+```
+
+### 測試
+
+```{ojs}
+f = createHelloWorld();
+f();
+```

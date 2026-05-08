@@ -1,0 +1,427 @@
+---
+title: "leetcode_0428"
+format:
+  html:
+    toc: true
+    toc-location: left
+    # toc-depth: 3         # 顯示到第幾層標題（## = 2, ### = 3）
+    toc-title: "目錄"    # 目錄的標題文字
+---
+
+## 2723. Add Two Numbers
+
+### 題目說明
+回傳一個函式，呼叫時永遠回傳 "Hello World"。
+
+### 解答
+
+```{ojs}
+createRepairTracker = (initialRepairs) => {
+  let currentTotal = initialRepairs;
+  return (newRepairs) => {
+    currentTotal += newRepairs;
+    return currentTotal;
+  }
+}
+```
+
+### 測試
+
+```{ojs}
+{
+  const machineATracker = createRepairTracker(5);
+  // const r1 = machineATracker(2);
+  // const r2 = machineATracker(3);
+  // const r3 = machineATracker(1);
+  return [ 
+      machineATracker(2),
+      machineATracker(3),
+      machineATracker(1) 
+      ];
+}
+```
+
+
+## 2704. To Be Or Not To Be
+
+### 題目說明
+需要回傳一個物件，然後呈現出是否相同，如果不同的話會需要 throw new Error
+
+### 解答
+
+```{ojs}
+expect = (val) => {
+    return {
+        toBe: (val2) =>{
+            if (val === val2){
+                return true;
+            } else {
+                throw new Error("Not Equal");
+            }
+        },
+        notToBe : (val2) =>{
+            if (val !== val2){
+                return true;
+            } else {
+                throw new Error("Equal");
+            }
+        }
+    }
+};
+
+
+```
+
+### 測試
+
+```{ojs}
+expect(5).toBe(null) // throws "Not Equal"
+expect(5).notToBe(null) // true
+expect(5).toBe(5); // true
+expect(5).notToBe(5); // throws "Equal"
+```
+
+
+
+## 2635. Apply Transform Over Each Element in Array
+
+### 題目說明
+寫一個迴圈函數，不可以用.map，把陣列當中的每一個元素都拿出來，然後丟給fn 去處理，完成之後要把結果裝到新陣列當中回傳
+但是因為太難了，所以我這邊先練習一下Gemini給我的練習題目
+
+請你寫一個名為 calculate 的函數。
+它會接收三個參數：
+- num1 (數字)
+- num2 (數字)
+- operation (一個函數)
+你的任務是：在 calculate 裡面執行 operation 這個函數，並把 num1 和 num2 傳給它，最後回傳計算結果。
+
+### 須完成的部分
+ const calculate = (num1, num2, operation) => {
+     // 請在這裡寫下你的邏輯  
+ }
+ // 測試一：加法刀片
+ const add = (a, b) => a + b;
+ console.log(calculate(5, 3, add)); // 預期輸出: 
+ // 測試二：相乘刀片
+ const multiply = (a, b) => a * b;
+ console.log(calculate(5, 3, multiply)); // 預期輸出: 15
+
+### 程式碼
+
+```javascript
+calculate = (num1, num2, operation) => {  
+  return () => {    // Here!!
+    let value = operation(num1, num2);    
+    return value;  
+  }    
+};
+```
+上面第一個會是錯誤的寫法，因為他是需要我回傳出一個值，但是我這邊比較像是回傳一個函數回去
+所以形態上就不一樣了，這樣會輸出的只有 "f()、f()"
+```javascript
+calculate = (num1, num2, operation) => {
+
+  let value;
+  return value = operation(num1, num2);
+    
+};
+```
+啊有點多此一舉，且你那一個value根本沒啥用
+
+```{ojs}
+calculate = (num1, num2, operation) => {
+  return operation(num1, num2);
+};
+```
+
+### 測試
+
+```{ojs}
+// 測試一：加法刀片
+add = (a, b) => a + b;
+calculate(5, 3, add); // 預期輸出: 8
+
+// 測試二：相乘刀片
+multiply = (a, b) => a * b;
+calculate(5, 3, multiply); // 預期輸出: 15
+```
+
+### 題目說明-2 : 練習看看如果是真陣列有關的題目的話
+請實作一個名為 filter 的函數。它會接收兩個參數：
+arr (一個數字陣列)
+fn (一個用來判斷的函數，它會回傳 true 或 false)
+建立一個新的陣列，跑遍 arr。如果把陣列裡的數字丟進 fn 執行後得到 true，就把該數字放進新陣列；
+如果得到 false，就略過。最後回傳新陣列。
+
+請嘗試完成以下程式碼：
+
+```javaScript
+const filter = (arr, fn) => {
+    // 1. 建立一個空的新陣列
+    const result = [];
+
+    // 2. 用 for 迴圈跑遍 arr
+    for (let i = 0; i < arr.length; i++) {
+        // 這裡該寫什麼判斷邏輯？ 
+        // 提示：執行 fn(arr[i])，看它是 true 還是 false
+    }
+
+    // 3. 回傳新陣列
+    return result;
+};
+```
+【預期結果】
+
+```javaScript
+// 測試：找出大於 10 的數字
+const isGreaterThanTen = (n) => n > 10;
+console.log(filter([5, 12, 8, 130, 44], isGreaterThanTen)); 
+// 預期輸出: [12, 130, 44]
+```
+
+
+```{ojs}
+filter = (arr, fn) => {
+    const result = [];
+
+    for (let i = 0; i < arr.length; i++) {
+        // 這裡該寫什麼判斷邏輯？ 
+        // 提示：執行 fn(arr[i])，看它是 true 還是 false
+        let resultFromFn = fn(arr[i]);
+        if (resultFromFn){
+          result.push(arr[i])
+        }
+    }
+    return result;
+};
+```
+很好，這邊學習到，如果要把元素放進去array裡面，要用push，誰再給你用append，那是Python的語法
+要記得大概會是
+push()
+reduce()
+reverse()
+sort()
+這四個可能會比較常使用到
+[MDN的說明](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push)
+
+```{ojs}
+isGreaterThanTen = (n) => n > 10;
+filter([5, 12, 8, 130, 44], isGreaterThanTen); 
+```
+
+
+### 題目說明-3 : Gemini 給我的第三個練習
+假設有一個 fn 叫做 process，它需要 三個參數：(數值, 索引, 陣列本人)。
+請寫出一個 forEach 概念的迴圈，把這三樣東西都傳給它：
+
+```{ojs}
+myCustomFunction = (arr, process) => {
+  let result = [];
+    for (let i = 0; i < arr.length; i++) {
+        // 請在這裡執行 process，並傳入：數值、索引、陣列本人
+        result.push(process(arr[i], i , arr))
+        
+    }
+    return result
+};
+```
+在這邊學習到：arr[i]本身就是數值本人
+arr[i].value 這樣的用法是當陣列裡面裝的是物件的時候，才會需要這樣寫，就是會需要把物件當中的某一個東西解構出來，才會這樣標示
+例如 [{value: 10}]）
+```{ojs}
+// 1. 準備陣列
+myNumbers = [10, 20, 30];
+
+// 2. 準備一個會印出詳細資訊的測試函式
+logger = (val, idx, originalArr) => {
+
+    return [ 
+    `第 ${idx} 次執行：`,
+    `- 目前數值是: ${val}`,
+    `- 索引值是: ${idx}`,
+    `- 原始陣列長度是: ${originalArr.length}`,
+    '-------------------',
+      ];
+};
+
+// 3. 執行你的自訂函數
+myCustomFunction(myNumbers, logger);
+```
+
+
+## 2634. Filter Elements from Array
+這邊Gemini 有給我其他的練習題
+找出「特定條件」的索引值 (Index)
+
+### 題目說明
+【題目要求】  
+請實作一個名為 findIndices 的函式：  
+接收兩個參數：arr（數字陣列）和 fn（判斷函式）。  
+fn 同樣會接收兩個參數：(數值, 索引)。  
+你的任務： 走訪陣列，如果 fn(arr[i], i) 回傳 true，則將該元素的「索引值 (Index)」存進新陣列；否則略過。
+最後回傳這個裝滿索引值的陣列。
+
+【請嘗試完成以下程式碼】
+
+```javaScript
+const findIndices = (arr, fn) => {
+    const result = [];
+
+    // 請在這裡寫下你的迴圈與邏輯
+    // 提示：這次 push 進去的是 i，而不是 arr[i]
+
+    return result;
+};
+```
+【預期結果】
+我們可以用這個 findIndices 來做很多事，例如「找出大於 20 且索引是偶數」的位置：
+
+```javaScript
+// 測試：找出數值大於 20，且位置是在偶數 index 的資料
+const newNumbers = [10, 25, 15, 40, 5, 60];
+const checkFn = (val, idx) => val > 20 && idx % 2 === 0;
+
+// 預期輸出: [1, 3, 5] 嗎？ 
+// 不對，我們來對照一下：
+// idx 1 (25 > 20) -> 但 idx 1 是奇數 -> 略過
+// idx 3 (40 > 20) -> 但 idx 3 是奇數 -> 略過
+// 只有符合「大於 20 且索引是偶數」的才會被抓出來。
+
+findIndices(newNumbers, checkFn);
+```
+
+### 嘗試做看看
+```{ojs}
+findIndices = (arr, fn) => {
+    const result = [];
+
+    for(let i = 0 ; i < arr.length ; i+=2){
+      if(fn(arr[i] , i)){
+        result.push(i)
+      }      
+    }
+    return result;
+};
+```
+
+```{ojs}
+// 測試：找出數值大於 20，且位置是在偶數 index 的資料
+newNumbers = [10, 25, 15, 40, 5, 60];
+checkFn = (val, idx) => val > 20 && idx % 2 === 0;
+
+findIndices(newNumbers, checkFn);
+```
+這邊出現 Array(0) [] 是正確的，因為剛好大於20的部分都index為奇數，所以完成！
+
+
+## 2626. Array Reduce Transformation
+### 題目說明
+請實作一個函式 combineWords。
+【題目要求】  
+接收三個參數：words（字串陣列）、initialValue（初始字串）、joinFn（組合函式）。  
+規則：  
+你需要將 initialValue 與陣列中的第一個字串丟進 joinFn 運算。  
+將產出的結果再與陣列中的下一個字串丟進 joinFn。  
+重複這個過程直到陣列結束。  
+回傳： 最終組合完成的長字串。  
+
+【請完成以下程式碼】
+
+```javaScript
+const combineWords = (words, initialValue, joinFn) => {
+    // 在此撰寫你的邏輯
+};
+
+// --- 測試用例 ---
+const myWords = ["is", "coding", "fun"];
+const start = "JavaScript";
+
+// 組合函式：負責把兩個字串用空格接起來
+const spaceJoiner = (acc, curr) => acc + " " + curr;
+
+// 預期輸出: "JavaScript is coding fun"
+console.log(combineWords(myWords, start, spaceJoiner));
+```
+
+### 這邊開始自己練習
+```javascript
+combineWords = (words, initialValue, joinFn) => {
+  let resultString = "";
+    for(let i = 0 ; i < words.length ; i++){
+      resultString.concat("",joinFn(words[i]))
+    }
+  return initialValue.concat(resultString);
+};
+
+```
+我在想的是說，每一次我都會需要把這一個東西記憶起來，因為這一個會需要銜接上一次組合的結果
+所以適用concat嗎 還是說不是這樣的? 是要用其他比較簡單的方法嗎 I don't know
+
+```javascript
+// --- 測試用例 ---
+myWords = ["is", "coding", "fun"];
+start = "JavaScript";
+
+// 組合函式：負責把兩個字串用空格接起來
+spaceJoiner = (acc, curr) => acc + " " + curr;
+
+// 預期輸出: "JavaScript is coding fun"
+combineWords(myWords, start, spaceJoiner);
+```
+
+這邊Gemini跟我說，concat並不會改變原本的字串
+所以說，他只會回傳一個新的字串，但它不會改變 resultString 本身的值。
+所以如果說沒有寫 resultString = resultString.concat(...)，那麼 resultString 就會永遠停留在最初的空字串 ""。
+而且應該要知道，就是這一個外面fn他會接收兩個參數，但我這邊少一個
+
+### Gemini 更正之後的寫法-1 (以我的為基準來小改)
+```{ojs}
+combineWords = (words, initialValue, joinFn) => {
+  let resultString = initialValue; 
+    for(let i = 0 ; i < words.length ; i++){
+      resultString = joinFn(resultString , words[i])
+    }
+  return resultString;
+};
+
+```
+這邊的作法會是把 resultString 當成每一次累積出來的成果
+然後初始值先進來之後，我會把我陣列當中的每一個東西，添加在每一次的初始值後方
+這樣在結果的 resultString 輸出之後，因為定義好的 spaceJoiner 會把兩個字串用空格接起來
+所以第一次回圈之後會是 "JavaScript is"，然後這樣一直延續到最後
+
+```{ojs}
+// --- 測試用例 ---
+myWords = ["is", "coding", "fun"];
+start = "JavaScript";
+
+// 組合函式：負責把兩個字串用空格接起來
+spaceJoiner = (acc, curr) => acc + " " + curr;
+
+// 預期輸出: "JavaScript is coding fun"
+combineWords(myWords, start, spaceJoiner);
+```
+
+
+## 2629. Function Composition
+### 寫完leetcode才來練這一個延伸的
+因為我覺得我對於要讓 程式記憶、使用array的其他方法來運行  
+這樣的觀念都沒有到很熟悉，所以希望來多練習看看  
+記得這邊可以多去看看 [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduceRight)的寫法  
+這邊連結給的是 reduceRight
+他的用法有兩種，參數順序會是固定的
+```javacript
+reduceRight(callbackFn)
+reduceRight(callbackFn, initialValue)
+```
+```javascript
+functions.reduceRight(
+  (acc, fn) => { return fn(acc); }, // 這是第 1 個參數 (callbackFn)
+  x                                 // 這是第 2 個參數 (initialValue)
+);
+```
+在這邊的參數的意思來解說一下：  
+acc : 代表是累積值，第一次執行的時候會是剛開始傳入進去的初始值，在這邊就會是x   
+之後的執行都會是「上一次回呼函式回傳的結果」
+fn : 代表目前正在處理的陣列元素，他會由最右邊開始往左邊來做處理   

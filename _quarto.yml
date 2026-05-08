@@ -1,0 +1,13 @@
+project:
+  type: website
+
+website:
+  title: "JS-note"
+  sidebar:
+    style: "docked"
+    contents: auto
+
+format:
+  html:
+    theme: cosmo
+    toc: true

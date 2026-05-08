@@ -1,0 +1,62 @@
+---
+title: "leetcode_0506"
+format:
+  html:
+    toc: true
+    toc-location: left
+    # toc-depth: 3         # 顯示到第幾層標題（## = 2, ### = 3）
+    toc-title: "目錄"    # 目錄的標題文字
+---
+
+## 2723. Add Two Promises
+### 先練習這邊
+因為感覺自己對於 async/await 不是很熟悉，還有對於 Promise 不熟悉
+完蛋，對所有都不熟悉怎麼辦啦嗚嗚
+
+暖身練習：單一 Promise 處理  
+請實作一個名為 doublePromiseValue 的非同步箭頭函式。  
+該函式會接收一個名為 numberPromise 的參數（這是一個會 resolve 出數字的 Promise）。  
+請取得該 Promise 解析後的數值，將其乘以 2，並回傳計算結果。  
+
+```javascript
+const doublePromiseValue = async (numberPromise) => {
+  // 請在此處完成實作
+};
+
+// 測試預期行為：
+// const myPromise = new Promise(resolve => setTimeout(() => resolve(10), 100));
+// doublePromiseValue(myPromise).then(result => console.log(result)); 
+// 預期輸出: 20
+```
+
+### 第一次嘗試
+```javascript
+const doublePromiseValue = async (numberPromise) => {
+  const result = await numberPromise();
+  console.log("result", result * 2);
+  return result * 2;
+};
+
+// 測試預期行為：
+const myPromise = new Promise((resolve) => setTimeout(() => resolve(10), 100));
+doublePromiseValue(myPromise).then((result) => console.log(result));
+// 預期輸出: 20
+```
+因為之前只有接觸過 `await` 需要等待的是一個函式  
+還沒有碰過如果是接收一個Promise物件的話我應該如何寫
+所以吉米尼跟我說  
+`當你建立 new Promise(...) 的那一刻，內部的非同步操作（例如計時器）就已經開始執行了。Promise 是代表「未來會產出的結果」的物件，而不是函式。要「等待」一個 Promise 物件，直接對該物件使用 await 即可。`
+
+
+### 修正後
+```{ojs}
+doublePromiseValue = async (numberPromise) => {
+  const result = await numberPromise;  // 修正這邊了
+  return result * 2;
+};
+
+// 測試預期行為：
+myPromise = new Promise((resolve) => setTimeout(() => resolve(10), 100));
+doublePromiseValue(myPromise).then((result) => (result));
+```
+

@@ -1,0 +1,391 @@
+---
+title: "leetcode_0429"
+format:
+  html:
+    toc: true
+    toc-location: left
+    # toc-depth: 3         # 顯示到第幾層標題（## = 2, ### = 3）
+    toc-title: "目錄"    # 目錄的標題文字
+---
+
+## 2629. Function Composition
+### 寫完leetcode才來練這一個延伸的
+因為我覺得我對於要讓 程式記憶、使用array的其他方法來運行  
+這樣的觀念都沒有到很熟悉，所以希望來多練習看看  
+記得這邊可以多去看看 [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduceRight)的寫法  
+這邊連結給的是 reduceRight
+他的用法有兩種，參數順序會是固定的
+```javacript
+reduceRight(callbackFn)
+reduceRight(callbackFn, initialValue)
+```
+```javascript
+functions.reduceRight(
+  (acc, fn) => { return fn(acc); }, // 這是第 1 個參數 (callbackFn)
+  x                                 // 這是第 2 個參數 (initialValue)
+);
+```
+在這邊的參數的意思來解說一下：  
+acc : 代表是累積值，第一次執行的時候會是剛開始傳入進去的初始值，在這邊就會是x   
+之後的執行都會是「上一次回呼函式回傳的結果」
+fn : 代表目前正在處理的陣列元素，他會由最右邊開始往左邊來做處理   
+
+### 第一題：購物車總金額計算 (Array of Objects)
+在實務中，我們很少只處理純數字陣列，通常會處理「物件陣列」。  
+
+【題目要求】  
+請實作一個 calculateTotal(cart) 函式，算出購物車內的總金額。  
+計算公式：price * quantity 的總和。  
+
+```javaScript
+const myCart = [
+  { item: "Apple", price: 30, quantity: 2 },
+  { item: "Banana", price: 15, quantity: 4 },
+  { item: "Milk", price: 90, quantity: 1 }
+];
+
+const calculateTotal = (cart) => {
+    // 請在這裡使用 reduce 來算出總金額
+    // 提示：你的初始值應該設為多少？
+};
+
+// 預期輸出： 30*2 + 15*4 + 90*1 = 210
+// console.log(calculateTotal(myCart));
+```
+#### 這邊來練習第一題
+```{ojs}
+myCart = [
+  { item: "Apple", price: 30, quantity: 2 },
+  { item: "Banana", price: 15, quantity: 4 },
+  { item: "Milk", price: 90, quantity: 1 }
+];
+
+calculateTotal = (cart) => {
+    // 請在這裡使用 reduce 來算出總金額
+    // 提示：你的初始值應該設為多少？
+    return cart.reduce(
+      (acc , item) =>
+        {
+          return acc += item.price * item.quantity; // Here 原本小粗心
+        }
+      ,0
+    )
+};
+
+
+```
+
+```{ojs}
+// 預期輸出： 30*2 + 15*4 + 90*1 = 210
+calculateTotal(myCart);
+```
+這一題原本有一個小粗心的地方在於 CB 當中，要記得return，老天，D級錯誤嗚嗚嗚
+當arrow function 使用大括號，預設會需要寫return出來
+
+
+### 第二題：字元統計機 (Tallying) - ⭐️ MDN 經典觀念
+這題會徹底顛覆你對 reduce 的想像，也是面試極常出現的考題！我們要把陣列轉換成一個「物件」，用來統計每個元素出現的次數。  
+
+【題目要求】
+請實作一個 countOccurrences(arr) 函式，回傳一個物件，標示每個字母出現的次數。
+
+```javaScript
+const letters = ['A', 'B', 'A', 'C', 'B', 'A'];
+
+const countOccurrences = (arr) => {
+    // 請使用 reduce 實作
+    // 💡 終極提示：這次你的接力起點 (initialValue) 應該是一個「空物件 {}」！
+    
+    return arr.reduce((acc, curr) => {
+        // 這裡該怎麼寫？
+        // 1. 檢查 acc 這個物件裡面，有沒有 curr 這個屬性？
+        // 2. 如果沒有，就幫它建立並設定為 1。
+        // 3. 如果有，就讓它的值 +1。
+        // 4. 最後一定要 return acc，把更新後的物件交接給下一棒！
+    }, {}); 
+};
+
+// 預期輸出： { A: 3, B: 2, C: 1 }
+// console.log(countOccurrences(letters));
+```
+#### 這邊來練習第一題
+```javascript
+let acc = { A: 1 };
+let curr = 'B';
+// 查值：去 acc 裡面找 'B' 的次數
+console.log(acc[curr]); 
+// 因為目前計分板上沒有 B，所以會得到 undefined
+```
+這邊acc[B]代表說，我會想要去找尋在acc這一個物件當中，有沒有B這一個屬性的值
+如果說我想要找物件裡面有的屬性名稱的話，可以用以下的方式，就是把他們都丟到 【Object.keys()】
+```javascript
+const myScoreBoard = { A: 3, B: 2, C: 1 };
+
+const allKeys = Object.keys(myScoreBoard); // 把物件丟進 Object.keys()
+console.log(allKeys);  // 輸出會是一個陣列： ["A", "B", "C"]
+```
+
+#### 現在練習看看
+先寫一下會需要做的事情  
+這裡該怎麼寫？  
+1. 檢查 acc 這個物件裡面，有沒有 curr 這個屬性？  
+2. 如果沒有，就幫它建立並設定為 1。  
+3. 如果有，就讓它的值 +1。  
+4. 最後一定要 return acc，把更新後的物件交接給下一棒！  
+```javascript
+letters = ['A', 'B', 'A', 'C', 'B', 'A'];
+
+countOccurrences = (arr) => {
+    
+    return arr.reduce((acc, curr) => {
+      // acc代表是累積到的東西
+      // curr是現在正在處理的元素
+
+        let object = {};
+
+        if(acc[curr] === undefined){
+          acc[curr] =1
+        }else{
+          acc[curr] +=1
+        }
+        return acc
+      
+    }, {} // 這邊起始的值就是空物件就好
+    ); 
+};
+```
+
+```javascript
+// 預期輸出： { A: 3, B: 2, C: 1 }
+countOccurrences(letters);
+```
+
+#### 更好的寫法在下面
+```{ojs}
+countOccurrences = (arr) => {
+    return arr.reduce((acc, curr) => {      
+        // (acc[curr] || 0) 的意思是：如果 acc[curr] 是 undefined，就先吐出 0 給你
+        acc[curr] = (acc[curr] || 0) + 1;
+        
+        return acc;
+    }, {}); 
+};
+```
+ 
+
+## 2703. Return Length of Arguments Passed
+這邊因為針對 參數的部分 不是很熟悉，所以練完leetcode之後，請Gemini出題目給我做練習  
+
+【題目要求】  
+請實作一個名為 analyzeArguments 的函式。  
+它必須能夠接收任意數量的參數，並且回傳一個陣列，裡面包含兩個資訊：  
+傳入參數的總數量。  
+傳入的第一個參數的值（如果沒有傳入任何參數，則為 undefined）。  
+
+
+```javaScript
+const analyzeArguments = (...args) => {
+    // 請在這裡實作邏輯
+    // 提示：你已經知道如何取得總數量，那如何從 args 陣列中取得第一個元素？
+    
+};
+
+// --- 測試用例 ---
+// console.log(analyzeArguments(10, 20, 30)); 
+// 預期輸出: [3, 10]
+
+// console.log(analyzeArguments("Hello", "World")); 
+// 預期輸出: [2, "Hello"]
+
+// console.log(analyzeArguments()); 
+// 預期輸出: [0, undefined]
+```
+
+
+### 這邊開始練習
+```{ojs}
+analyzeArguments = (...args) => {
+    // 請在這裡實作邏輯
+    // 提示：你已經知道如何取得總數量，那如何從 args 陣列中取得第一個元素？
+    return [
+      args.length , args[0]
+    ]
+    
+};
+
+```
+
+```{ojs}
+// --- 測試用例 ---
+analyzeArguments(10, 20, 30); 
+// 預期輸出: [3, 10]
+
+analyzeArguments("Hello", "World"); 
+// 預期輸出: [2, "Hello"]
+
+analyzeArguments(); 
+// 預期輸出: [0, undefined]
+```
+
+
+## 2623. Memoize
+### 基礎練習題：單一參數的「記憶吐司」
+
+【題目要求】
+請實作一個 memoizeSingleArg(fn)：
+它接收一個只吃單一參數的函式 fn。
+準備一個物件 {} 來當作「快取抽屜（Cache）」。
+回傳一個新函式。當這個新函式被呼叫時：
+先檢查抽屜裡有沒有這個參數的答案？
+如果有：直接從抽屜拿出答案回傳（不要呼叫 fn）。
+如果沒有：乖乖呼叫 fn(arg) 算出答案，把答案存進抽屜裡，最後回傳答案。
+
+【請完成以下程式碼】
+
+```javaScript
+const memoizeSingleArg = (fn) => {
+    // 1. 準備一個空物件當作抽屜
+    const cache = {}; 
+
+    return (arg) => {
+        // 2. 判斷：這個 arg (例如數字 5) 是否已經存在於 cache 中？
+        if (arg in cache) {
+            // 3. 如果算過了，直接回傳抽屜裡的答案
+            
+        } else {
+            // 4. 如果沒算過：
+            // (a) 呼叫 fn(arg) 算出結果
+            // (b) 把結果存進 cache[arg] 裡面
+            // (c) 回傳結果
+            
+        }
+    };
+};
+```
+
+【測試你的邏輯】
+當你寫完後，你可以用下面這段程式碼在腦海中或環境裡跑跑看：
+
+```javaScript
+// 一個假裝運算很慢的函數
+const slowSquare = (n) => {
+    console.log(`[執行繁重運算] 正在計算 ${n} 的平方...`);
+    return n * n;
+};
+
+// 幫它套上記憶能力
+const fastSquare = memoizeSingleArg(slowSquare);
+
+console.log(fastSquare(5)); 
+// 預期：印出 "[執行繁重運算]..."，然後印出 25
+
+console.log(fastSquare(5)); 
+// 預期："不印出" 繁重運算的提示，直接秒殺印出 25！(因為從快取拿了)
+```
+
+### 第一次嘗試寫看看
+```javascript
+memoizeSingleArg = (fn) => {
+    // 1. 準備一個空物件當作抽屜
+    const cache = {}; 
+
+    return (arg) => {
+        // 2. 判斷：這個 arg (例如數字 5) 是否已經存在於 cache 中？
+        if (arg in cache) {
+            // 3. 如果算過了，直接回傳抽屜裡的答案
+            return cache.arg;
+            
+        } else {
+            // 4. 如果沒算過：
+            // (a) 呼叫 fn(arg) 算出結果
+            // (b) 把結果存進 cache[arg] 裡面
+            // (c) 回傳結果
+            
+            cache[fn(arg)] = fn(arg)
+            return fn(arg)
+            
+        }
+    };
+};
+```
+這樣寫的錯誤如下 :   
+  
+1. cache.arg :  
+這樣化她會去找這一個名為 arg 的屬性，而不是去找這一個arg的東西
+所以說應該寫 "cache[arg]"，他會先把中括號裡面的東西解出，像是如果arg = 5的話，那就會變成 cache[5]
+所以如果說屬性名稱會是一個變動的變數的時候，只能用中括號來做處理
+  
+2. cache[fn(arg)] = fn(arg) : 
+cache 應該需要做到的是 : 把【傳進來的問題】當作Key，然後把【求出來的值】當作Value存起來
+所以說現在的寫法會把【求出來的值】當作 Key、Value，兩者都當了老天
+所以說應該會變成 `cache[arg] = fn(arg) `
+  
+3. 最後一個提點 : 
+因為 `fn(arg)` 可能是一個「需要算很久」的函數
+所以說在else的區塊當中，可以先宣告一個變數，把`fn(arg)` 執行一次的結果存近來
+然後後續的存值、回傳，都直接用這一個變數來處理就好
+
+
+### 重新測試
+```javascript
+memoizeSingleArg = (fn) => {
+    const cache = {}; 
+    return (arg) => {
+        if (arg in cache) {
+            return cache[arg];
+            
+        } else {
+          let result = 0; // Here can make some change
+          result = fn(arg) // Here can make some change
+            // 4. 如果沒算過：
+            // (a) 呼叫 fn(arg) 算出結果
+            // (b) 把結果存進 cache[arg] 裡面
+            // (c) 回傳結果
+            
+            cache[arg] = result
+            return result
+            
+        }
+    };
+};
+```
+然後gemini說可以做得更好，就是目前作法是  
+```javascript
+let result = 0;   // 先準備一個空盒子，裡面先放 0
+result = fn(arg); // 呼叫 fn(arg) 算答案，把算出來的答案丟進盒子裡，把原本的 0 蓋掉
+```
+這樣的話，其實剛開始做賦值的動作會比較沒有意義  
+所以說可以改成
+```{ojs}
+memoizeSingleArg = (fn) => {
+    const cache = {}; 
+    return (arg) => {
+        if (arg in cache) {
+            return cache[arg];
+            
+        } else {
+          const result = fn(arg); // 可以改成這邊
+            cache[arg] = result
+            return result            
+        }
+    };
+};
+```
+
+【測試你的邏輯】
+當你寫完後，你可以用下面這段程式碼在腦海中或環境裡跑跑看：
+
+```{ojs}
+// 一個假裝運算很慢的函數
+slowSquare = (n) => {
+    console.log(`[執行繁重運算] 正在計算 ${n} 的平方...`);
+    return n * n;
+};
+fastSquare = memoizeSingleArg(slowSquare);
+
+fastSquare(5); 
+// 預期：印出 "[執行繁重運算]..."，然後印出 25
+
+fastSquare(5); 
+// 預期："不印出" 繁重運算的提示，直接秒殺印出 25！(因為從快取拿了)
+```

@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>leetcode_0429 – JS-note</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-787e033c7b6f65c9dfccb6078e5d2d34.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./leetcode_0429.html">leetcode_0429</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">JS-note</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./leetcode_0428.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">leetcode_0428</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./leetcode_0429.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">leetcode_0429</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./leetcode_0430.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">leetcode_0430</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./leetcode_0506.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">leetcode_0506</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Template.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Template</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">目錄</h2>
+   
+  <ul>
+  <li><a href="#function-composition" id="toc-function-composition" class="nav-link active" data-scroll-target="#function-composition">2629. Function Composition</a>
+  <ul class="collapse">
+  <li><a href="#寫完leetcode才來練這一個延伸的" id="toc-寫完leetcode才來練這一個延伸的" class="nav-link" data-scroll-target="#寫完leetcode才來練這一個延伸的">寫完leetcode才來練這一個延伸的</a></li>
+  <li><a href="#第一題購物車總金額計算-array-of-objects" id="toc-第一題購物車總金額計算-array-of-objects" class="nav-link" data-scroll-target="#第一題購物車總金額計算-array-of-objects">第一題：購物車總金額計算 (Array of Objects)</a></li>
+  <li><a href="#第二題字元統計機-tallying---mdn-經典觀念" id="toc-第二題字元統計機-tallying---mdn-經典觀念" class="nav-link" data-scroll-target="#第二題字元統計機-tallying---mdn-經典觀念">第二題：字元統計機 (Tallying) - ⭐️ MDN 經典觀念</a></li>
+  </ul></li>
+  <li><a href="#return-length-of-arguments-passed" id="toc-return-length-of-arguments-passed" class="nav-link" data-scroll-target="#return-length-of-arguments-passed">2703. Return Length of Arguments Passed</a>
+  <ul class="collapse">
+  <li><a href="#這邊開始練習" id="toc-這邊開始練習" class="nav-link" data-scroll-target="#這邊開始練習">這邊開始練習</a></li>
+  </ul></li>
+  <li><a href="#memoize" id="toc-memoize" class="nav-link" data-scroll-target="#memoize">2623. Memoize</a>
+  <ul class="collapse">
+  <li><a href="#基礎練習題單一參數的記憶吐司" id="toc-基礎練習題單一參數的記憶吐司" class="nav-link" data-scroll-target="#基礎練習題單一參數的記憶吐司">基礎練習題：單一參數的「記憶吐司」</a></li>
+  <li><a href="#第一次嘗試寫看看" id="toc-第一次嘗試寫看看" class="nav-link" data-scroll-target="#第一次嘗試寫看看">第一次嘗試寫看看</a></li>
+  <li><a href="#重新測試" id="toc-重新測試" class="nav-link" data-scroll-target="#重新測試">重新測試</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">leetcode_0429</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="function-composition" class="level2">
+<h2 class="anchored" data-anchor-id="function-composition">2629. Function Composition</h2>
+<section id="寫完leetcode才來練這一個延伸的" class="level3">
+<h3 class="anchored" data-anchor-id="寫完leetcode才來練這一個延伸的">寫完leetcode才來練這一個延伸的</h3>
+<p>因為我覺得我對於要讓 程式記憶、使用array的其他方法來運行<br>
+這樣的觀念都沒有到很熟悉，所以希望來多練習看看<br>
+記得這邊可以多去看看 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduceRight">MDN</a>的寫法<br>
+這邊連結給的是 reduceRight 他的用法有兩種，參數順序會是固定的</p>
+<pre class="javacript"><code>reduceRight(callbackFn)
+reduceRight(callbackFn, initialValue)</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>functions<span class="op">.</span><span class="fu">reduceRight</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  (acc<span class="op">,</span> fn) <span class="kw">=&gt;</span> { <span class="cf">return</span> <span class="fu">fn</span>(acc)<span class="op">;</span> }<span class="op">,</span> <span class="co">// 這是第 1 個參數 (callbackFn)</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  x                                 <span class="co">// 這是第 2 個參數 (initialValue)</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>在這邊的參數的意思來解說一下：<br>
+acc : 代表是累積值，第一次執行的時候會是剛開始傳入進去的初始值，在這邊就會是x<br>
+之後的執行都會是「上一次回呼函式回傳的結果」 fn : 代表目前正在處理的陣列元素，他會由最右邊開始往左邊來做處理</p>
+</section>
+<section id="第一題購物車總金額計算-array-of-objects" class="level3">
+<h3 class="anchored" data-anchor-id="第一題購物車總金額計算-array-of-objects">第一題：購物車總金額計算 (Array of Objects)</h3>
+<p>在實務中，我們很少只處理純數字陣列，通常會處理「物件陣列」。</p>
+<p>【題目要求】<br>
+請實作一個 calculateTotal(cart) 函式，算出購物車內的總金額。<br>
+計算公式：price * quantity 的總和。</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> myCart <span class="op">=</span> [</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">item</span><span class="op">:</span> <span class="st">"Apple"</span><span class="op">,</span> <span class="dt">price</span><span class="op">:</span> <span class="dv">30</span><span class="op">,</span> <span class="dt">quantity</span><span class="op">:</span> <span class="dv">2</span> }<span class="op">,</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">item</span><span class="op">:</span> <span class="st">"Banana"</span><span class="op">,</span> <span class="dt">price</span><span class="op">:</span> <span class="dv">15</span><span class="op">,</span> <span class="dt">quantity</span><span class="op">:</span> <span class="dv">4</span> }<span class="op">,</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">item</span><span class="op">:</span> <span class="st">"Milk"</span><span class="op">,</span> <span class="dt">price</span><span class="op">:</span> <span class="dv">90</span><span class="op">,</span> <span class="dt">quantity</span><span class="op">:</span> <span class="dv">1</span> }</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>]<span class="op">;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> calculateTotal <span class="op">=</span> (cart) <span class="kw">=&gt;</span> {</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 請在這裡使用 reduce 來算出總金額</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 提示：你的初始值應該設為多少？</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">// 預期輸出： 30*2 + 15*4 + 90*1 = 210</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">// console.log(calculateTotal(myCart));</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="這邊來練習第一題" class="level4">
+<h4 class="anchored" data-anchor-id="這邊來練習第一題">這邊來練習第一題</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" data-startfrom="57" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 56;"><span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>myCart <span class="op">=</span> [</span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">item</span><span class="op">:</span> <span class="st">"Apple"</span><span class="op">,</span> <span class="dt">price</span><span class="op">:</span> <span class="dv">30</span><span class="op">,</span> <span class="dt">quantity</span><span class="op">:</span> <span class="dv">2</span> }<span class="op">,</span></span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">item</span><span class="op">:</span> <span class="st">"Banana"</span><span class="op">,</span> <span class="dt">price</span><span class="op">:</span> <span class="dv">15</span><span class="op">,</span> <span class="dt">quantity</span><span class="op">:</span> <span class="dv">4</span> }<span class="op">,</span></span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">item</span><span class="op">:</span> <span class="st">"Milk"</span><span class="op">,</span> <span class="dt">price</span><span class="op">:</span> <span class="dv">90</span><span class="op">,</span> <span class="dt">quantity</span><span class="op">:</span> <span class="dv">1</span> }</span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>]<span class="op">;</span></span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>calculateTotal <span class="op">=</span> (cart) <span class="kw">=&gt;</span> {</span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 請在這裡使用 reduce 來算出總金額</span></span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 提示：你的初始值應該設為多少？</span></span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> cart<span class="op">.</span><span class="fu">reduce</span>(</span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>      (acc <span class="op">,</span> item) <span class="kw">=&gt;</span></span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>          <span class="cf">return</span> acc <span class="op">+=</span> item<span class="op">.</span><span class="at">price</span> <span class="op">*</span> item<span class="op">.</span><span class="at">quantity</span><span class="op">;</span> <span class="co">// Here 原本小粗心</span></span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>      <span class="op">,</span><span class="dv">0</span></span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" data-startfrom="78" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 77;"><span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a><span class="co">// 預期輸出： 30*2 + 15*4 + 90*1 = 210</span></span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a><span class="fu">calculateTotal</span>(myCart)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<p>這一題原本有一個小粗心的地方在於 CB 當中，要記得return，老天，D級錯誤嗚嗚嗚 當arrow function 使用大括號，預設會需要寫return出來</p>
+</section>
+</section>
+<section id="第二題字元統計機-tallying---mdn-經典觀念" class="level3">
+<h3 class="anchored" data-anchor-id="第二題字元統計機-tallying---mdn-經典觀念">第二題：字元統計機 (Tallying) - ⭐️ MDN 經典觀念</h3>
+<p>這題會徹底顛覆你對 reduce 的想像，也是面試極常出現的考題！我們要把陣列轉換成一個「物件」，用來統計每個元素出現的次數。</p>
+<p>【題目要求】 請實作一個 countOccurrences(arr) 函式，回傳一個物件，標示每個字母出現的次數。</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> letters <span class="op">=</span> [<span class="st">'A'</span><span class="op">,</span> <span class="st">'B'</span><span class="op">,</span> <span class="st">'A'</span><span class="op">,</span> <span class="st">'C'</span><span class="op">,</span> <span class="st">'B'</span><span class="op">,</span> <span class="st">'A'</span>]<span class="op">;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> countOccurrences <span class="op">=</span> (arr) <span class="kw">=&gt;</span> {</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 請使用 reduce 實作</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 💡 終極提示：這次你的接力起點 (initialValue) 應該是一個「空物件 {}」！</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> arr<span class="op">.</span><span class="fu">reduce</span>((acc<span class="op">,</span> curr) <span class="kw">=&gt;</span> {</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        <span class="co">// 這裡該怎麼寫？</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        <span class="co">// 1. 檢查 acc 這個物件裡面，有沒有 curr 這個屬性？</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        <span class="co">// 2. 如果沒有，就幫它建立並設定為 1。</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        <span class="co">// 3. 如果有，就讓它的值 +1。</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        <span class="co">// 4. 最後一定要 return acc，把更新後的物件交接給下一棒！</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span> {})<span class="op">;</span> </span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">// 預期輸出： { A: 3, B: 2, C: 1 }</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co">// console.log(countOccurrences(letters));</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="這邊來練習第一題-1" class="level4">
+<h4 class="anchored" data-anchor-id="這邊來練習第一題-1">這邊來練習第一題</h4>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> acc <span class="op">=</span> { <span class="dt">A</span><span class="op">:</span> <span class="dv">1</span> }<span class="op">;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> curr <span class="op">=</span> <span class="st">'B'</span><span class="op">;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">// 查值：去 acc 裡面找 'B' 的次數</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(acc[curr])<span class="op">;</span> </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">// 因為目前計分板上沒有 B，所以會得到 undefined</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>這邊acc[B]代表說，我會想要去找尋在acc這一個物件當中，有沒有B這一個屬性的值 如果說我想要找物件裡面有的屬性名稱的話，可以用以下的方式，就是把他們都丟到 【Object.keys()】</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> myScoreBoard <span class="op">=</span> { <span class="dt">A</span><span class="op">:</span> <span class="dv">3</span><span class="op">,</span> <span class="dt">B</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span> <span class="dt">C</span><span class="op">:</span> <span class="dv">1</span> }<span class="op">;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> allKeys <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(myScoreBoard)<span class="op">;</span> <span class="co">// 把物件丟進 Object.keys()</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(allKeys)<span class="op">;</span>  <span class="co">// 輸出會是一個陣列： ["A", "B", "C"]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="現在練習看看" class="level4">
+<h4 class="anchored" data-anchor-id="現在練習看看">現在練習看看</h4>
+<p>先寫一下會需要做的事情<br>
+這裡該怎麼寫？<br>
+1. 檢查 acc 這個物件裡面，有沒有 curr 這個屬性？<br>
+2. 如果沒有，就幫它建立並設定為 1。<br>
+3. 如果有，就讓它的值 +1。<br>
+4. 最後一定要 return acc，把更新後的物件交接給下一棒！</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>letters <span class="op">=</span> [<span class="st">'A'</span><span class="op">,</span> <span class="st">'B'</span><span class="op">,</span> <span class="st">'A'</span><span class="op">,</span> <span class="st">'C'</span><span class="op">,</span> <span class="st">'B'</span><span class="op">,</span> <span class="st">'A'</span>]<span class="op">;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>countOccurrences <span class="op">=</span> (arr) <span class="kw">=&gt;</span> {</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> arr<span class="op">.</span><span class="fu">reduce</span>((acc<span class="op">,</span> curr) <span class="kw">=&gt;</span> {</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>      <span class="co">// acc代表是累積到的東西</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>      <span class="co">// curr是現在正在處理的元素</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">let</span> object <span class="op">=</span> {}<span class="op">;</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(acc[curr] <span class="op">===</span> <span class="kw">undefined</span>){</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>          acc[curr] <span class="op">=</span><span class="dv">1</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>        }<span class="cf">else</span>{</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>          acc[curr] <span class="op">+=</span><span class="dv">1</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> acc</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span> {} <span class="co">// 這邊起始的值就是空物件就好</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    )<span class="op">;</span> </span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">// 預期輸出： { A: 3, B: 2, C: 1 }</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">countOccurrences</span>(letters)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="更好的寫法在下面" class="level4">
+<h4 class="anchored" data-anchor-id="更好的寫法在下面">更好的寫法在下面</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11" data-startfrom="164" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 163;"><span id="cb11-164"><a href="#cb11-164" aria-hidden="true" tabindex="-1"></a>countOccurrences <span class="op">=</span> (arr) <span class="kw">=&gt;</span> {</span>
+<span id="cb11-165"><a href="#cb11-165" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> arr<span class="op">.</span><span class="fu">reduce</span>((acc<span class="op">,</span> curr) <span class="kw">=&gt;</span> {      </span>
+<span id="cb11-166"><a href="#cb11-166" aria-hidden="true" tabindex="-1"></a>        <span class="co">// (acc[curr] || 0) 的意思是：如果 acc[curr] 是 undefined，就先吐出 0 給你</span></span>
+<span id="cb11-167"><a href="#cb11-167" aria-hidden="true" tabindex="-1"></a>        acc[curr] <span class="op">=</span> (acc[curr] <span class="op">||</span> <span class="dv">0</span>) <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb11-168"><a href="#cb11-168" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb11-169"><a href="#cb11-169" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> acc<span class="op">;</span></span>
+<span id="cb11-170"><a href="#cb11-170" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span> {})<span class="op">;</span> </span>
+<span id="cb11-171"><a href="#cb11-171" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="return-length-of-arguments-passed" class="level2">
+<h2 class="anchored" data-anchor-id="return-length-of-arguments-passed">2703. Return Length of Arguments Passed</h2>
+<p>這邊因為針對 參數的部分 不是很熟悉，所以練完leetcode之後，請Gemini出題目給我做練習</p>
+<p>【題目要求】<br>
+請實作一個名為 analyzeArguments 的函式。<br>
+它必須能夠接收任意數量的參數，並且回傳一個陣列，裡面包含兩個資訊：<br>
+傳入參數的總數量。<br>
+傳入的第一個參數的值（如果沒有傳入任何參數，則為 undefined）。</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> analyzeArguments <span class="op">=</span> (<span class="op">...</span>args) <span class="kw">=&gt;</span> {</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 請在這裡實作邏輯</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 提示：你已經知道如何取得總數量，那如何從 args 陣列中取得第一個元素？</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">// --- 測試用例 ---</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">// console.log(analyzeArguments(10, 20, 30)); </span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">// 預期輸出: [3, 10]</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co">// console.log(analyzeArguments("Hello", "World")); </span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co">// 預期輸出: [2, "Hello"]</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="co">// console.log(analyzeArguments()); </span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="co">// 預期輸出: [0, undefined]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="這邊開始練習" class="level3">
+<h3 class="anchored" data-anchor-id="這邊開始練習">這邊開始練習</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13" data-startfrom="206" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 205;"><span id="cb13-206"><a href="#cb13-206" aria-hidden="true" tabindex="-1"></a>analyzeArguments <span class="op">=</span> (<span class="op">...</span>args) <span class="kw">=&gt;</span> {</span>
+<span id="cb13-207"><a href="#cb13-207" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 請在這裡實作邏輯</span></span>
+<span id="cb13-208"><a href="#cb13-208" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 提示：你已經知道如何取得總數量，那如何從 args 陣列中取得第一個元素？</span></span>
+<span id="cb13-209"><a href="#cb13-209" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [</span>
+<span id="cb13-210"><a href="#cb13-210" aria-hidden="true" tabindex="-1"></a>      args<span class="op">.</span><span class="at">length</span> <span class="op">,</span> args[<span class="dv">0</span>]</span>
+<span id="cb13-211"><a href="#cb13-211" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb13-212"><a href="#cb13-212" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-213"><a href="#cb13-213" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14" data-startfrom="220" data-source-offset="-17"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 219;"><span id="cb14-220"><a href="#cb14-220" aria-hidden="true" tabindex="-1"></a><span class="fu">analyzeArguments</span>(<span class="dv">10</span><span class="op">,</span> <span class="dv">20</span><span class="op">,</span> <span class="dv">30</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-5-1" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15" data-startfrom="223" data-source-offset="-69"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 222;"><span id="cb15-223"><a href="#cb15-223" aria-hidden="true" tabindex="-1"></a><span class="fu">analyzeArguments</span>(<span class="st">"Hello"</span><span class="op">,</span> <span class="st">"World"</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-5-2" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16" data-startfrom="226" data-source-offset="-132"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 225;"><span id="cb16-226"><a href="#cb16-226" aria-hidden="true" tabindex="-1"></a><span class="fu">analyzeArguments</span>()<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-5-3" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="memoize" class="level2">
+<h2 class="anchored" data-anchor-id="memoize">2623. Memoize</h2>
+<section id="基礎練習題單一參數的記憶吐司" class="level3">
+<h3 class="anchored" data-anchor-id="基礎練習題單一參數的記憶吐司">基礎練習題：單一參數的「記憶吐司」</h3>
+<p>【題目要求】 請實作一個 memoizeSingleArg(fn)： 它接收一個只吃單一參數的函式 fn。 準備一個物件 {} 來當作「快取抽屜（Cache）」。 回傳一個新函式。當這個新函式被呼叫時： 先檢查抽屜裡有沒有這個參數的答案？ 如果有：直接從抽屜拿出答案回傳（不要呼叫 fn）。 如果沒有：乖乖呼叫 fn(arg) 算出答案，把答案存進抽屜裡，最後回傳答案。</p>
+<p>【請完成以下程式碼】</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> memoizeSingleArg <span class="op">=</span> (fn) <span class="kw">=&gt;</span> {</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 1. 準備一個空物件當作抽屜</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> cache <span class="op">=</span> {}<span class="op">;</span> </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (arg) <span class="kw">=&gt;</span> {</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>        <span class="co">// 2. 判斷：這個 arg (例如數字 5) 是否已經存在於 cache 中？</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (arg <span class="kw">in</span> cache) {</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>            <span class="co">// 3. 如果算過了，直接回傳抽屜裡的答案</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>        } <span class="cf">else</span> {</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>            <span class="co">// 4. 如果沒算過：</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>            <span class="co">// (a) 呼叫 fn(arg) 算出結果</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>            <span class="co">// (b) 把結果存進 cache[arg] 裡面</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>            <span class="co">// (c) 回傳結果</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>    }<span class="op">;</span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>【測試你的邏輯】 當你寫完後，你可以用下面這段程式碼在腦海中或環境裡跑跑看：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">// 一個假裝運算很慢的函數</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> slowSquare <span class="op">=</span> (n) <span class="kw">=&gt;</span> {</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="vs">`[執行繁重運算] 正在計算 </span><span class="sc">${</span>n<span class="sc">}</span><span class="vs"> 的平方...`</span>)<span class="op">;</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> n <span class="op">*</span> n<span class="op">;</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">// 幫它套上記憶能力</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> fastSquare <span class="op">=</span> <span class="fu">memoizeSingleArg</span>(slowSquare)<span class="op">;</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="fu">fastSquare</span>(<span class="dv">5</span>))<span class="op">;</span> </span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co">// 預期：印出 "[執行繁重運算]..."，然後印出 25</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="fu">fastSquare</span>(<span class="dv">5</span>))<span class="op">;</span> </span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="co">// 預期："不印出" 繁重運算的提示，直接秒殺印出 25！(因為從快取拿了)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="第一次嘗試寫看看" class="level3">
+<h3 class="anchored" data-anchor-id="第一次嘗試寫看看">第一次嘗試寫看看</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>memoizeSingleArg <span class="op">=</span> (fn) <span class="kw">=&gt;</span> {</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 1. 準備一個空物件當作抽屜</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> cache <span class="op">=</span> {}<span class="op">;</span> </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (arg) <span class="kw">=&gt;</span> {</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>        <span class="co">// 2. 判斷：這個 arg (例如數字 5) 是否已經存在於 cache 中？</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (arg <span class="kw">in</span> cache) {</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>            <span class="co">// 3. 如果算過了，直接回傳抽屜裡的答案</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> cache<span class="op">.</span><span class="at">arg</span><span class="op">;</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>        } <span class="cf">else</span> {</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>            <span class="co">// 4. 如果沒算過：</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>            <span class="co">// (a) 呼叫 fn(arg) 算出結果</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>            <span class="co">// (b) 把結果存進 cache[arg] 裡面</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>            <span class="co">// (c) 回傳結果</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>            cache[<span class="fu">fn</span>(arg)] <span class="op">=</span> <span class="fu">fn</span>(arg)</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="fu">fn</span>(arg)</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>    }<span class="op">;</span></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>這樣寫的錯誤如下 :</p>
+<ol type="1">
+<li><p>cache.arg :<br>
+這樣化她會去找這一個名為 arg 的屬性，而不是去找這一個arg的東西 所以說應該寫 “cache[arg]”，他會先把中括號裡面的東西解出，像是如果arg = 5的話，那就會變成 cache[5] 所以如果說屬性名稱會是一個變動的變數的時候，只能用中括號來做處理</p></li>
+<li><p>cache[fn(arg)] = fn(arg) : cache 應該需要做到的是 : 把【傳進來的問題】當作Key，然後把【求出來的值】當作Value存起來 所以說現在的寫法會把【求出來的值】當作 Key、Value，兩者都當了老天 所以說應該會變成 <code>cache[arg] = fn(arg)</code></p></li>
+<li><p>最後一個提點 : 因為 <code>fn(arg)</code> 可能是一個「需要算很久」的函數 所以說在else的區塊當中，可以先宣告一個變數，把<code>fn(arg)</code> 執行一次的結果存近來 然後後續的存值、回傳，都直接用這一個變數來處理就好</p></li>
+</ol>
+</section>
+<section id="重新測試" class="level3">
+<h3 class="anchored" data-anchor-id="重新測試">重新測試</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>memoizeSingleArg <span class="op">=</span> (fn) <span class="kw">=&gt;</span> {</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> cache <span class="op">=</span> {}<span class="op">;</span> </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (arg) <span class="kw">=&gt;</span> {</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (arg <span class="kw">in</span> cache) {</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> cache[arg]<span class="op">;</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>        } <span class="cf">else</span> {</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>          <span class="kw">let</span> result <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> <span class="co">// Here can make some change</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>          result <span class="op">=</span> <span class="fu">fn</span>(arg) <span class="co">// Here can make some change</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>            <span class="co">// 4. 如果沒算過：</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>            <span class="co">// (a) 呼叫 fn(arg) 算出結果</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>            <span class="co">// (b) 把結果存進 cache[arg] 裡面</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>            <span class="co">// (c) 回傳結果</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>            cache[arg] <span class="op">=</span> result</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> result</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>    }<span class="op">;</span></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>然後gemini說可以做得更好，就是目前作法是</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> result <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>   <span class="co">// 先準備一個空盒子，裡面先放 0</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> <span class="fu">fn</span>(arg)<span class="op">;</span> <span class="co">// 呼叫 fn(arg) 算答案，把算出來的答案丟進盒子裡，把原本的 0 蓋掉</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>這樣的話，其實剛開始做賦值的動作會比較沒有意義<br>
+所以說可以改成</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22" data-startfrom="359" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 358;"><span id="cb22-359"><a href="#cb22-359" aria-hidden="true" tabindex="-1"></a>memoizeSingleArg <span class="op">=</span> (fn) <span class="kw">=&gt;</span> {</span>
+<span id="cb22-360"><a href="#cb22-360" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> cache <span class="op">=</span> {}<span class="op">;</span> </span>
+<span id="cb22-361"><a href="#cb22-361" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (arg) <span class="kw">=&gt;</span> {</span>
+<span id="cb22-362"><a href="#cb22-362" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (arg <span class="kw">in</span> cache) {</span>
+<span id="cb22-363"><a href="#cb22-363" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> cache[arg]<span class="op">;</span></span>
+<span id="cb22-364"><a href="#cb22-364" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb22-365"><a href="#cb22-365" aria-hidden="true" tabindex="-1"></a>        } <span class="cf">else</span> {</span>
+<span id="cb22-366"><a href="#cb22-366" aria-hidden="true" tabindex="-1"></a>          <span class="kw">const</span> result <span class="op">=</span> <span class="fu">fn</span>(arg)<span class="op">;</span> <span class="co">// 可以改成這邊</span></span>
+<span id="cb22-367"><a href="#cb22-367" aria-hidden="true" tabindex="-1"></a>            cache[arg] <span class="op">=</span> result</span>
+<span id="cb22-368"><a href="#cb22-368" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> result            </span>
+<span id="cb22-369"><a href="#cb22-369" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb22-370"><a href="#cb22-370" aria-hidden="true" tabindex="-1"></a>    }<span class="op">;</span></span>
+<span id="cb22-371"><a href="#cb22-371" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-6" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<p>【測試你的邏輯】 當你寫完後，你可以用下面這段程式碼在腦海中或環境裡跑跑看：</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23" data-startfrom="380" data-source-offset="-16"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 379;"><span id="cb23-380"><a href="#cb23-380" aria-hidden="true" tabindex="-1"></a>slowSquare <span class="op">=</span> (n) <span class="kw">=&gt;</span> {</span>
+<span id="cb23-381"><a href="#cb23-381" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="vs">`[執行繁重運算] 正在計算 </span><span class="sc">${</span>n<span class="sc">}</span><span class="vs"> 的平方...`</span>)<span class="op">;</span></span>
+<span id="cb23-382"><a href="#cb23-382" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> n <span class="op">*</span> n<span class="op">;</span></span>
+<span id="cb23-383"><a href="#cb23-383" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span>
+<span id="cb23-384"><a href="#cb23-384" aria-hidden="true" tabindex="-1"></a>fastSquare <span class="op">=</span> <span class="fu">memoizeSingleArg</span>(slowSquare)<span class="op">;</span></span>
+<span id="cb23-385"><a href="#cb23-385" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-386"><a href="#cb23-386" aria-hidden="true" tabindex="-1"></a><span class="fu">fastSquare</span>(<span class="dv">5</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-7-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-7-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-7-3" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24" data-startfrom="389" data-source-offset="-206"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 388;"><span id="cb24-389"><a href="#cb24-389" aria-hidden="true" tabindex="-1"></a><span class="fu">fastSquare</span>(<span class="dv">5</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-7-4" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Im15Q2FydCA9IFtcclxuICB7IGl0ZW06IFwiQXBwbGVcIiwgcHJpY2U6IDMwLCBxdWFudGl0eTogMiB9LFxyXG4gIHsgaXRlbTogXCJCYW5hbmFcIiwgcHJpY2U6IDE1LCBxdWFudGl0eTogNCB9LFxyXG4gIHsgaXRlbTogXCJNaWxrXCIsIHByaWNlOiA5MCwgcXVhbnRpdHk6IDEgfVxyXG5dO1xyXG5cclxuY2FsY3VsYXRlVG90YWwgPSAoY2FydCkgPT4ge1xyXG4gICAgLy8g6KuL5Zyo6YCZ6KOh5L2/55SoIHJlZHVjZSDkvobnrpflh7rnuL3ph5HpoY1cclxuICAgIC8vIOaPkOekuu+8muS9oOeahOWIneWni+WAvOaHieipsuioreeCuuWkmuWwke+8n1xyXG4gICAgcmV0dXJuIGNhcnQucmVkdWNlKFxyXG4gICAgICAoYWNjICwgaXRlbSkgPT5cclxuICAgICAgICB7XHJcbiAgICAgICAgICByZXR1cm4gYWNjICs9IGl0ZW0ucHJpY2UgKiBpdGVtLnF1YW50aXR5OyAvLyBIZXJlIOWOn+acrOWwj+eyl+W/g1xyXG4gICAgICAgIH1cclxuICAgICAgLDBcclxuICAgIClcclxufTtcclxuXHJcblxyXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiIvLyDpoJDmnJ/ovLjlh7rvvJogMzAqMiArIDE1KjQgKyA5MCoxID0gMjEwXHJcbmNhbGN1bGF0ZVRvdGFsKG15Q2FydCk7XHJcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMyIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImNvdW50T2NjdXJyZW5jZXMgPSAoYXJyKSA9PiB7XHJcbiAgICByZXR1cm4gYXJyLnJlZHVjZSgoYWNjLCBjdXJyKSA9PiB7ICAgICAgXHJcbiAgICAgICAgLy8gKGFjY1tjdXJyXSB8fCAwKSDnmoTmhI/mgJ3mmK/vvJrlpoLmnpwgYWNjW2N1cnJdIOaYryB1bmRlZmluZWTvvIzlsLHlhYjlkJDlh7ogMCDntabkvaBcclxuICAgICAgICBhY2NbY3Vycl0gPSAoYWNjW2N1cnJdIHx8IDApICsgMTtcclxuICAgICAgICBcclxuICAgICAgICByZXR1cm4gYWNjO1xyXG4gICAgfSwge30pOyBcclxufTtcclxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC00IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiYW5hbHl6ZUFyZ3VtZW50cyA9ICguLi5hcmdzKSA9PiB7XHJcbiAgICAvLyDoq4vlnKjpgJnoo6Hlr6bkvZzpgo/ovK9cclxuICAgIC8vIOaPkOekuu+8muS9oOW3sue2k+efpemBk+WmguS9leWPluW+l+e4veaVuOmHj++8jOmCo+WmguS9leW+niBhcmdzIOmZo+WIl+S4reWPluW+l+esrOS4gOWAi+WFg+e0oO+8n1xyXG4gICAgcmV0dXJuIFtcclxuICAgICAgYXJncy5sZW5ndGggLCBhcmdzWzBdXHJcbiAgICBdXHJcbiAgICBcclxufTtcclxuXHJcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Ii8vIC0tLSDmuKzoqabnlKjkvosgLS0tXHJcbmFuYWx5emVBcmd1bWVudHMoMTAsIDIwLCAzMCk7IFxyXG4vLyDpoJDmnJ/ovLjlh7o6IFszLCAxMF1cclxuXHJcbmFuYWx5emVBcmd1bWVudHMoXCJIZWxsb1wiLCBcIldvcmxkXCIpOyBcclxuLy8g6aCQ5pyf6Ly45Ye6OiBbMiwgXCJIZWxsb1wiXVxyXG5cclxuYW5hbHl6ZUFyZ3VtZW50cygpOyBcclxuLy8g6aCQ5pyf6Ly45Ye6OiBbMCwgdW5kZWZpbmVkXVxyXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTYiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJtZW1vaXplU2luZ2xlQXJnID0gKGZuKSA9PiB7XHJcbiAgICBjb25zdCBjYWNoZSA9IHt9OyBcclxuICAgIHJldHVybiAoYXJnKSA9PiB7XHJcbiAgICAgICAgaWYgKGFyZyBpbiBjYWNoZSkge1xyXG4gICAgICAgICAgICByZXR1cm4gY2FjaGVbYXJnXTtcclxuICAgICAgICAgICAgXHJcbiAgICAgICAgfSBlbHNlIHtcclxuICAgICAgICAgIGNvbnN0IHJlc3VsdCA9IGZuKGFyZyk7IC8vIOWPr+S7peaUueaIkOmAmemCilxyXG4gICAgICAgICAgICBjYWNoZVthcmddID0gcmVzdWx0XHJcbiAgICAgICAgICAgIHJldHVybiByZXN1bHQgICAgICAgICAgICBcclxuICAgICAgICB9XHJcbiAgICB9O1xyXG59O1xyXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTciLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiIvLyDkuIDlgIvlgYfoo53pgYvnrpflvojmhaLnmoTlh73mlbhcclxuc2xvd1NxdWFyZSA9IChuKSA9PiB7XHJcbiAgICBjb25zb2xlLmxvZyhgW+Wft+ihjOe5gemHjemBi+eul10g5q2j5Zyo6KiI566XICR7bn0g55qE5bmz5pa5Li4uYCk7XHJcbiAgICByZXR1cm4gbiAqIG47XHJcbn07XHJcbmZhc3RTcXVhcmUgPSBtZW1vaXplU2luZ2xlQXJnKHNsb3dTcXVhcmUpO1xyXG5cclxuZmFzdFNxdWFyZSg1KTsgXHJcbi8vIOmgkOacn++8muWNsOWHuiBcIlvln7fooYznuYHph43pgYvnrpddLi4uXCLvvIznhLblvozljbDlh7ogMjVcclxuXHJcbmZhc3RTcXVhcmUoNSk7IFxyXG4vLyDpoJDmnJ/vvJpcIuS4jeWNsOWHulwiIOe5gemHjemBi+eul+eahOaPkOekuu+8jOebtOaOpeenkuauuuWNsOWHuiAyNe+8gSjlm6Dngrrlvp7lv6vlj5bmi7/kuoYpXHJcbiJ9XX0=
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../..";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

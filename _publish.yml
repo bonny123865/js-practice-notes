@@ -1,0 +1,4 @@
+- source: project
+  quarto-pub:
+    - id: 6341fd94-db44-4787-a6c3-dfc0cf602872
+      url: https://bonny.quarto.pub/js-note
